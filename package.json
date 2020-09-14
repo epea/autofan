@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "python-shell": "^2.0.1",
+    "child_process": "^1.0.2",
     "raspi-gpio": "^6.2.2",
     "tplink-smarthome-api": "^2.0.0"
   }
