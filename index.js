@@ -1,13 +1,14 @@
-const plug = require("./plug/HS105plug.js");
-const sensor = require("./sensor/HCSR04.js");
-const awaitDelay = require("./util/awaitDelay.js");
+const awaitDelay = require("./util/awaitDelay.js")
+const plug = require("./plug/HS105plug.js")
+const repository = require("./repo/CO2Repository.js")
 
 async function doCheck() {
   while (true) {
-    await awaitDelay(10000);
-    const distance = sensor.scan();
-    distance > 100 ? plug.off() : plug.on();
-    console.log(distance);
+    await awaitDelay(5*60*1000)
+    const mean = repository.getMean()
+    mean.then( value => {
+      value > 800 ? plug.on() : plug.off();
+    } )
   }
 }
 
