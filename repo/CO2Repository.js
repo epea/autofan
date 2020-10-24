@@ -1,5 +1,9 @@
-const util = require('util');
-const Influx = require('influx');
+const log4js = require('log4js')
+const logger = log4js.getLogger()
+logger.level = 'info'
+
+const util = require('util')
+const Influx = require('influx')
 
 class CO2Repository{
   constructor() {
@@ -21,17 +25,20 @@ class CO2Repository{
      })
   }
   async getMean(){
+    const currentTime = new Date().getTime()
     const sql = util.format(
       `select MEAN(CO2) as mean from test WHERE time > %d AND time <= %d`,
-      (new Date().getTime() - 1000*10*60 )*1000000,
-      new Date().getTime()*1000000
+      (currentTime - 1000*10*60 )*1000000,
+      currentTime * 1000000
     )
+    logger.debug(util.format('sql:[%s]',sql))
+
       const res = await this.influx.query(sql) 
       return res[0].mean
   }
 }
 
-module.exports = new CO2Repository();
+module.exports = new CO2Repository()
 
 
 
