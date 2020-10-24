@@ -1,0 +1,15 @@
+# sudo ln -s /home/pi/autofan/autofan.service /etc/systemd/system/.
+[Unit]
+Description=Autofan Daemon
+
+[Service]
+WorkingDirectory=/home/pi/autofan
+ExecStart=node autofan.js
+ExecStop=/bin/kill ${MAINPID}
+Restart=always
+Type=simple
+User=pi
+Group=pi
+
+[Install]
+WantedBy=multi-user.target
