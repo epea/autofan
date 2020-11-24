@@ -10,12 +10,12 @@ const repository = require("./repo/CO2Repository.js")
 
 async function doCheck() {
   while (true) {
-    await awaitDelay(5*60*1000)
     const mean = repository.getMean()
     mean.then( value => {
       logger.debug(util.format('mean:[%d]',value))
       value > 800 ? plug.on() : plug.off()
     } )
+    await awaitDelay(5*60*1000)
   }
 }
 
